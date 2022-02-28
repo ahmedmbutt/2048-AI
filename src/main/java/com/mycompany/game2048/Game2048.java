@@ -10,14 +10,12 @@ import java.awt.event.KeyEvent;
 
 /**
  *
- * @author Ahmed
+ * @author Ahmed Mujtaba Butt
  */
 public class Game2048 extends javax.swing.JFrame {
-    
+
     private static final int SIDE = 4;
     private int[][] gameField = new int[SIDE][SIDE];
-
-    private boolean isGameStopped = false;
     private int score = 0;
 
     /**
@@ -315,7 +313,7 @@ public class Game2048 extends javax.swing.JFrame {
         createNewNumber();
         createNewNumber();
     }
-    
+
     private boolean canUserMove() {
         for (int y = 0; y < SIDE; y++) {
             for (int x = 0; x < SIDE; x++) {
@@ -330,7 +328,7 @@ public class Game2048 extends javax.swing.JFrame {
         }
         return false;
     }
-    
+
     private void createNewNumber() {
         if (getMaxTileValue() >= 2048) {
             win();
@@ -359,17 +357,15 @@ public class Game2048 extends javax.swing.JFrame {
         }
         return max;
     }
-    
+
     private void gameOver() {
         int value = JOptionPane.showConfirmDialog(this, "GAME OVER!\nWould you like to play again?", "GAME OVER!", JOptionPane.YES_NO_OPTION);
         if (value == JOptionPane.YES_OPTION) {
-            isGameStopped = false;
             score = 0;
-            setScore(score);
+            Score.setText("Score: " + score);
             createGame();
             drawScene();
         } else if (value == JOptionPane.NO_OPTION) {
-            isGameStopped = true;
             System.exit(0);
         }
     }
@@ -377,17 +373,15 @@ public class Game2048 extends javax.swing.JFrame {
     private void win() {
         int value = JOptionPane.showConfirmDialog(this, "YOU WIN!\nWould you like to play again?", "YOU WIN!", JOptionPane.YES_NO_OPTION);
         if (value == JOptionPane.YES_OPTION) {
-            isGameStopped = false;
             score = 0;
-            setScore(score);
+            Score.setText("Score: " + score);
             createGame();
             drawScene();
         } else if (value == JOptionPane.NO_OPTION) {
-            isGameStopped = true;
             System.exit(0);
         }
     }
-    
+
     private Color getColorByValue(int value) {
         switch (value) {
             case 0:
@@ -418,7 +412,7 @@ public class Game2048 extends javax.swing.JFrame {
                 return Color.decode("#000000");
         }
     }
-    
+
     private void moveLeft() {
         boolean isNewNumberNeeded = false;
         for (int[] row : gameField) {
@@ -484,7 +478,7 @@ public class Game2048 extends javax.swing.JFrame {
                 row[i + 1] = 0;
                 result = true;
                 score += row[i];
-                setScore(score);
+                Score.setText("Score: " + score);
             }
         }
         return result;
@@ -504,79 +498,79 @@ public class Game2048 extends javax.swing.JFrame {
         int value;
         Color color;
         String str;
-        
+
         value = gameField[0][0];
         color = getColorByValue(value);
         str = value > 0 ? "" + value : "";
         Cell1.setText(str);
         Cell1.setBackground(color);
-        
+
         value = gameField[0][1];
         color = getColorByValue(value);
         str = value > 0 ? "" + value : "";
         Cell2.setText(str);
         Cell2.setBackground(color);
-        
+
         value = gameField[0][2];
         color = getColorByValue(value);
         str = value > 0 ? "" + value : "";
         Cell3.setText(str);
         Cell3.setBackground(color);
-        
+
         value = gameField[0][3];
         color = getColorByValue(value);
         str = value > 0 ? "" + value : "";
         Cell4.setText(str);
         Cell4.setBackground(color);
-        
+
         value = gameField[1][0];
         color = getColorByValue(value);
         str = value > 0 ? "" + value : "";
         Cell5.setText(str);
         Cell5.setBackground(color);
-        
+
         value = gameField[1][1];
         color = getColorByValue(value);
         str = value > 0 ? "" + value : "";
         Cell6.setText(str);
         Cell6.setBackground(color);
-        
+
         value = gameField[1][2];
         color = getColorByValue(value);
         str = value > 0 ? "" + value : "";
         Cell7.setText(str);
         Cell7.setBackground(color);
-        
+
         value = gameField[1][3];
         color = getColorByValue(value);
         str = value > 0 ? "" + value : "";
         Cell8.setText(str);
         Cell8.setBackground(color);
-        
+
         value = gameField[2][0];
         color = getColorByValue(value);
         str = value > 0 ? "" + value : "";
         Cell9.setText(str);
         Cell9.setBackground(color);
-        
+
         value = gameField[2][1];
         color = getColorByValue(value);
         str = value > 0 ? "" + value : "";
         Cell10.setText(str);
         Cell10.setBackground(color);
-        
+
         value = gameField[2][2];
         color = getColorByValue(value);
         str = value > 0 ? "" + value : "";
         Cell11.setText(str);
         Cell11.setBackground(color);
-        
+
         value = gameField[2][3];
         color = getColorByValue(value);
         str = value > 0 ? "" + value : "";
         Cell12.setText(str);
         Cell12.setBackground(color);
-        
+
         value = gameField[3][0];
         color = getColorByValue(value);
         str = value > 0 ? "" + value : "";
@@ -588,13 +582,13 @@ public class Game2048 extends javax.swing.JFrame {
         str = value > 0 ? "" + value : "";
         Cell14.setText(str);
         Cell14.setBackground(color);
-        
+
         value = gameField[3][2];
         color = getColorByValue(value);
         str = value > 0 ? "" + value : "";
         Cell15.setText(str);
         Cell15.setBackground(color);
-        
+
         value = gameField[3][3];
         color = getColorByValue(value);
         str = value > 0 ? "" + value : "";
@@ -602,10 +596,6 @@ public class Game2048 extends javax.swing.JFrame {
         Cell16.setBackground(color);
     }
 
-    private void setScore(int score) {
-        Score.setText("Score: " + score);
-    }
-    
     /**
      * @param args the command line arguments
      */
