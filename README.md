@@ -13,4 +13,4 @@ The game is developed using **Java (Swing)**.
 **Pre-Requisites:** In order to run this game you need to have Java Runtime Environment (JRE) [[download]](https://www.java.com/download/ie_manual.jsp) installed on your computer.
 
 ## In-Game Screenshot:
-![Gameshot](https://github.com/AMB-19/Game2048/blob/master/GameShot.png)
+![Gameshot](GameShot.png)
