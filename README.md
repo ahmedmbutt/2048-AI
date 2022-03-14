@@ -5,7 +5,7 @@
 Use your  **arrow keys** to move the tiles. Tiles with the same number **merge into one** when they touch. Add them up to reach **2048!**
 
 ## Development:
-The game is developed using **Java (Swing)**.
+The game clone is developed using **Java (Swing)**.
 
 ## Download:
 *You can download the game from here: [**2048**](https://github.com/AMB-19/Game2048/raw/master/target/2048.jar)*
@@ -13,4 +13,4 @@ The game is developed using **Java (Swing)**.
 **Pre-Requisites:** In order to run this game you need to have Java Runtime Environment (JRE) [[download]](https://www.java.com/download/ie_manual.jsp) installed on your computer.
 
 ## In-Game Screenshot:
-![Gameshot](https://github.com/AMB-19/Game2048/blob/master/GameShot.png)
+![Gameshot](GameShot.png)
