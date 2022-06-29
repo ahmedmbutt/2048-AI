@@ -14,3 +14,9 @@ The game clone is developed using **Java (Swing)**.
 
 ## In-Game Screenshot:
 ![Gameshot](GameShot.png)
+  
+```
+ 💡 If you want to contribute to this project
+    and make it better with new ideas,
+    then your PR is very much welcomed! ✨ 
+```
