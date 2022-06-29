@@ -5,25 +5,23 @@
 package com.mycompany.game2048;
 
 import java.awt.Color;
-import javax.swing.JOptionPane;
 import java.awt.event.KeyEvent;
+import static com.mycompany.game2048.Logic.gameField;
 
 /**
  *
  * @author Ahmed Mujtaba Butt
  */
-public class Game2048 extends javax.swing.JFrame {
+public class Design extends javax.swing.JFrame {
 
-    private static final int SIDE = 4;
-    private int[][] gameField = new int[SIDE][SIDE];
-    private int score = 0;
+    private final Logic game = new Logic();
 
     /**
      * Creates new form GameDesign
      */
-    public Game2048() {
+    public Design() {
         initComponents();
-        createGame();
+        game.createGame();
         drawScene();
     }
 
@@ -276,7 +274,7 @@ public class Game2048 extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Game, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+            .addComponent(Game, javax.swing.GroupLayout.PREFERRED_SIZE, 500, Short.MAX_VALUE)
         );
 
         pack();
@@ -284,23 +282,23 @@ public class Game2048 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        if (!canUserMove()) {
-            gameOver();
+        if (!game.canUserMove()) {
+            game.gameOver();
             return;
         }
 
         switch (evt.getKeyCode()) {
             case KeyEvent.VK_UP:
-                moveUp();
+                game.moveUp();
                 break;
             case KeyEvent.VK_RIGHT:
-                moveRight();
+                game.moveRight();
                 break;
             case KeyEvent.VK_DOWN:
-                moveDown();
+                game.moveDown();
                 break;
             case KeyEvent.VK_LEFT:
-                moveLeft();
+                game.moveLeft();
                 break;
             default:
                 return;
@@ -308,81 +306,7 @@ public class Game2048 extends javax.swing.JFrame {
         drawScene();
     }//GEN-LAST:event_formKeyPressed
 
-    private void createGame() {
-        gameField = new int[SIDE][SIDE];
-        createNewNumber();
-        createNewNumber();
-    }
-
-    private boolean canUserMove() {
-        for (int y = 0; y < SIDE; y++) {
-            for (int x = 0; x < SIDE; x++) {
-                if (gameField[y][x] == 0) {
-                    return true;
-                } else if (y < SIDE - 1 && gameField[y][x] == gameField[y + 1][x]) {
-                    return true;
-                } else if ((x < SIDE - 1) && gameField[y][x] == gameField[y][x + 1]) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private void createNewNumber() {
-        if (getMaxTileValue() >= 2048) {
-            win();
-            return;
-        }
-
-        boolean isCreated = false;
-        do {
-            int x = (int) Math.floor(Math.random() * SIDE);
-            int y = (int) Math.floor(Math.random() * SIDE);
-            if (gameField[y][x] == 0) {
-                gameField[y][x] = (int) Math.floor(Math.random() * 10) < 9 ? 2 : 4;
-                isCreated = true;
-            }
-        } while (!isCreated);
-    }
-
-    private int getMaxTileValue() {
-        int max = gameField[0][0];
-        for (int y = 0; y < SIDE; y++) {
-            for (int x = 0; x < SIDE; x++) {
-                if (gameField[y][x] > max) {
-                    max = gameField[y][x];
-                }
-            }
-        }
-        return max;
-    }
-
-    private void gameOver() {
-        int value = JOptionPane.showConfirmDialog(this, "GAME OVER!\nWould you like to play again?", "GAME OVER!", JOptionPane.YES_NO_OPTION);
-        if (value == JOptionPane.YES_OPTION) {
-            score = 0;
-            Score.setText("Score: " + score);
-            createGame();
-            drawScene();
-        } else if (value == JOptionPane.NO_OPTION) {
-            System.exit(0);
-        }
-    }
-
-    private void win() {
-        int value = JOptionPane.showConfirmDialog(this, "YOU WIN!\nWould you like to play again?", "YOU WIN!", JOptionPane.YES_NO_OPTION);
-        if (value == JOptionPane.YES_OPTION) {
-            score = 0;
-            Score.setText("Score: " + score);
-            createGame();
-            drawScene();
-        } else if (value == JOptionPane.NO_OPTION) {
-            System.exit(0);
-        }
-    }
-
-    private Color getColorByValue(int value) {
+    private static Color getColorByValue(int value) {
         switch (value) {
             case 0:
                 return Color.decode("#FFFFFF");
@@ -413,88 +337,7 @@ public class Game2048 extends javax.swing.JFrame {
         }
     }
 
-    private void moveLeft() {
-        boolean isNewNumberNeeded = false;
-        for (int[] row : gameField) {
-            boolean wasCompressed = compressRow(row);
-            boolean wasMerged = mergeRow(row);
-            if (wasMerged) {
-                compressRow(row);
-            }
-            if (wasCompressed || wasMerged) {
-                isNewNumberNeeded = true;
-            }
-        }
-        if (isNewNumberNeeded) {
-            createNewNumber();
-        }
-    }
-
-    private void moveUp() {
-        rotateClockwise();
-        rotateClockwise();
-        rotateClockwise();
-        moveLeft();
-        rotateClockwise();
-    }
-
-    private void moveRight() {
-        rotateClockwise();
-        rotateClockwise();
-        moveLeft();
-        rotateClockwise();
-        rotateClockwise();
-    }
-
-    private void moveDown() {
-        rotateClockwise();
-        moveLeft();
-        rotateClockwise();
-        rotateClockwise();
-        rotateClockwise();
-    }
-
-    private boolean compressRow(int[] row) {
-        int insertPosition = 0;
-        boolean result = false;
-        for (int x = 0; x < SIDE; x++) {
-            if (row[x] > 0) {
-                if (x != insertPosition) {
-                    row[insertPosition] = row[x];
-                    row[x] = 0;
-                    result = true;
-                }
-                insertPosition++;
-            }
-        }
-        return result;
-    }
-
-    private boolean mergeRow(int[] row) {
-        boolean result = false;
-        for (int i = 0; i < row.length - 1; i++) {
-            if (row[i] != 0 && row[i] == row[i + 1]) {
-                row[i] += row[i + 1];
-                row[i + 1] = 0;
-                result = true;
-                score += row[i];
-                Score.setText("Score: " + score);
-            }
-        }
-        return result;
-    }
-
-    private void rotateClockwise() {
-        int[][] result = new int[SIDE][SIDE];
-        for (int i = 0; i < SIDE; i++) {
-            for (int j = 0; j < SIDE; j++) {
-                result[j][SIDE - 1 - i] = gameField[i][j];
-            }
-        }
-        gameField = result;
-    }
-
-    private void drawScene() {
+    public static void drawScene() {
         int value;
         Color color;
         String str;
@@ -613,14 +456,18 @@ public class Game2048 extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Game2048.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Design.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Game2048.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Design.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Game2048.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Design.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Game2048.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Design.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -628,29 +475,29 @@ public class Game2048 extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new Game2048().setVisible(true);
+            new Design().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Cell1;
-    private javax.swing.JLabel Cell10;
-    private javax.swing.JLabel Cell11;
-    private javax.swing.JLabel Cell12;
-    private javax.swing.JLabel Cell13;
-    private javax.swing.JLabel Cell14;
-    private javax.swing.JLabel Cell15;
-    private javax.swing.JLabel Cell16;
-    private javax.swing.JLabel Cell2;
-    private javax.swing.JLabel Cell3;
-    private javax.swing.JLabel Cell4;
-    private javax.swing.JLabel Cell5;
-    private javax.swing.JLabel Cell6;
-    private javax.swing.JLabel Cell7;
-    private javax.swing.JLabel Cell8;
-    private javax.swing.JLabel Cell9;
+    private static javax.swing.JLabel Cell1;
+    private static javax.swing.JLabel Cell10;
+    private static javax.swing.JLabel Cell11;
+    private static javax.swing.JLabel Cell12;
+    private static javax.swing.JLabel Cell13;
+    private static javax.swing.JLabel Cell14;
+    private static javax.swing.JLabel Cell15;
+    private static javax.swing.JLabel Cell16;
+    private static javax.swing.JLabel Cell2;
+    private static javax.swing.JLabel Cell3;
+    private static javax.swing.JLabel Cell4;
+    private static javax.swing.JLabel Cell5;
+    private static javax.swing.JLabel Cell6;
+    private static javax.swing.JLabel Cell7;
+    private static javax.swing.JLabel Cell8;
+    private static javax.swing.JLabel Cell9;
     private javax.swing.JLabel G2048;
     private javax.swing.JPanel Game;
-    private javax.swing.JLabel Score;
+    public static javax.swing.JLabel Score;
     // End of variables declaration//GEN-END:variables
 }
