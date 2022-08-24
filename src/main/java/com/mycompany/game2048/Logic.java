@@ -4,8 +4,6 @@
  */
 package com.mycompany.game2048;
 
-import static com.mycompany.game2048.Design.Score;
-import static com.mycompany.game2048.Design.drawScene;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,9 +12,21 @@ import javax.swing.JOptionPane;
  */
 public class Logic {
 
-    private static final int SIDE = 4;
     private int score = 0;
+    private static final int SIDE = 4;
     public static int[][] gameField = new int[SIDE][SIDE];
+
+    public int[][] getGameField() {
+        int [][] board = new int[SIDE][SIDE];
+        for (int i = 0; i < 4; i++) {
+            System.arraycopy(gameField[i], 0, board[i], 0, 4);
+        }
+        return board;
+    }
+
+    public int getSIDE() {
+        return SIDE;
+    }
 
     public void createGame() {
         gameField = new int[SIDE][SIDE];
@@ -56,7 +66,7 @@ public class Logic {
         } while (!isCreated);
     }
 
-    private int getMaxTileValue() {
+    public int getMaxTileValue() {
         int max = gameField[0][0];
         for (int y = 0; y < SIDE; y++) {
             for (int x = 0; x < SIDE; x++) {
@@ -72,9 +82,9 @@ public class Logic {
         int value = JOptionPane.showConfirmDialog(null, "GAME OVER!\nWould you like to play again?", "GAME OVER!", JOptionPane.YES_NO_OPTION);
         if (value == JOptionPane.YES_OPTION) {
             score = 0;
-            Score.setText("Score: " + score);
+            Design.Score.setText("Score: " + score);
             createGame();
-            drawScene();
+            Design.drawScene();
         } else if (value == JOptionPane.NO_OPTION) {
             System.exit(0);
         }
@@ -84,9 +94,9 @@ public class Logic {
         int value = JOptionPane.showConfirmDialog(null, "YOU WIN!\nWould you like to play again?", "YOU WIN!", JOptionPane.YES_NO_OPTION);
         if (value == JOptionPane.YES_OPTION) {
             score = 0;
-            Score.setText("Score: " + score);
+            Design.Score.setText("Score: " + score);
             createGame();
-            drawScene();
+            Design.drawScene();
         } else if (value == JOptionPane.NO_OPTION) {
             System.exit(0);
         }
@@ -157,7 +167,7 @@ public class Logic {
                 row[i + 1] = 0;
                 result = true;
                 score += row[i];
-                Score.setText("Score: " + score);
+                Design.Score.setText("Score: " + score);
             }
         }
         return result;

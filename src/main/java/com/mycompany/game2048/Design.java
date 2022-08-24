@@ -51,8 +51,11 @@ public class Design extends javax.swing.JFrame {
         Cell14 = new javax.swing.JLabel();
         Cell15 = new javax.swing.JLabel();
         Cell16 = new javax.swing.JLabel();
-        G2048 = new javax.swing.JLabel();
         Score = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        Game2048 = new javax.swing.JLabel();
+        shutdown = new javax.swing.JLabel();
+        solve = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -178,17 +181,62 @@ public class Design extends javax.swing.JFrame {
         Cell16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
         Cell16.setOpaque(true);
 
-        G2048.setBackground(java.awt.Color.white);
-        G2048.setFont(new java.awt.Font("Monospaced", 1, 48)); // NOI18N
-        G2048.setForeground(java.awt.Color.gray);
-        G2048.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        G2048.setText("2048");
-
         Score.setBackground(java.awt.Color.white);
         Score.setFont(new java.awt.Font("Monospaced", 1, 48)); // NOI18N
-        Score.setForeground(java.awt.Color.gray);
+        Score.setForeground(java.awt.Color.darkGray);
         Score.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Score.setText("Score: 0");
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        Game2048.setBackground(java.awt.Color.white);
+        Game2048.setFont(new java.awt.Font("Monospaced", 1, 48)); // NOI18N
+        Game2048.setForeground(java.awt.Color.darkGray);
+        Game2048.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Game2048.setText("2048");
+
+        shutdown.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        shutdown.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ahmed\\OneDrive\\Documents\\Projects\\Game2048\\shutdown-icon.png")); // NOI18N
+        shutdown.setToolTipText("Close!");
+        shutdown.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        shutdown.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                shutdownMousePressed(evt);
+            }
+        });
+
+        solve.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        solve.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ahmed\\OneDrive\\Documents\\Projects\\Game2048\\solve-icon.png")); // NOI18N
+        solve.setToolTipText("Solve with AI!");
+        solve.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        solve.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                solveMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(solve, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(Game2048, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(shutdown, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Game2048, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(shutdown, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(solve, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         javax.swing.GroupLayout GameLayout = new javax.swing.GroupLayout(Game);
         Game.setLayout(GameLayout);
@@ -197,8 +245,9 @@ public class Design extends javax.swing.JFrame {
             .addGroup(GameLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(GameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(GameLayout.createSequentialGroup()
-                        .addGap(0, 50, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(GameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Cell1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Cell5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -230,14 +279,13 @@ public class Design extends javax.swing.JFrame {
                                 .addGap(0, 0, 0)
                                 .addComponent(Cell16, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(50, 50, 50))
-                    .addComponent(Score, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(G2048, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(Score, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         GameLayout.setVerticalGroup(
             GameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(GameLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(G2048, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addGroup(GameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Cell4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -274,7 +322,7 @@ public class Design extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Game, javax.swing.GroupLayout.PREFERRED_SIZE, 500, Short.MAX_VALUE)
+            .addComponent(Game, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -305,6 +353,16 @@ public class Design extends javax.swing.JFrame {
         }
         drawScene();
     }//GEN-LAST:event_formKeyPressed
+
+    private void shutdownMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_shutdownMousePressed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_shutdownMousePressed
+
+    private void solveMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_solveMousePressed
+        // TODO add your handling code here:
+        AI auto = new AI();
+    }//GEN-LAST:event_solveMousePressed
 
     private static Color getColorByValue(int value) {
         switch (value) {
@@ -496,8 +554,11 @@ public class Design extends javax.swing.JFrame {
     private static javax.swing.JLabel Cell7;
     private static javax.swing.JLabel Cell8;
     private static javax.swing.JLabel Cell9;
-    private javax.swing.JLabel G2048;
     private javax.swing.JPanel Game;
+    private javax.swing.JLabel Game2048;
     public static javax.swing.JLabel Score;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel shutdown;
+    private javax.swing.JLabel solve;
     // End of variables declaration//GEN-END:variables
 }
