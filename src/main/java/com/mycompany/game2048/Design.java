@@ -196,7 +196,7 @@ public class Design extends javax.swing.JFrame {
         Game2048.setText("2048");
 
         shutdown.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        shutdown.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ahmed\\OneDrive\\Documents\\Projects\\Game2048\\shutdown-icon.png")); // NOI18N
+        shutdown.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ahmed\\OneDrive\\Documents\\Projects\\Game2048\\src\\img\\shutdown-icon.png")); // NOI18N
         shutdown.setToolTipText("Close!");
         shutdown.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         shutdown.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -206,7 +206,7 @@ public class Design extends javax.swing.JFrame {
         });
 
         solve.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        solve.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ahmed\\OneDrive\\Documents\\Projects\\Game2048\\solve-icon.png")); // NOI18N
+        solve.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ahmed\\OneDrive\\Documents\\Projects\\Game2048\\src\\img\\solve-icon.png")); // NOI18N
         solve.setToolTipText("Solve with AI!");
         solve.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         solve.addMouseListener(new java.awt.event.MouseAdapter() {

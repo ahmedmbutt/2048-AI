@@ -40,7 +40,7 @@ public class AI {
                 break;
             }
 
-            String moveCode = getBestMove(6);
+            String moveCode = getBestMove(5);
             System.out.println(moveCode);
 
             sendKeys(moveCode);
@@ -51,10 +51,6 @@ public class AI {
     private AI(Object object) {
         board = game.getGameField();
 //        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private int utility() {
-        return game.getMaxTileValue();
     }
 
     private void sendKeys(String moveCode) {
@@ -74,6 +70,20 @@ public class AI {
             default:
                 break;
         }
+    }
+
+    private int utility() {
+        int count = 0;
+        int sum = 0;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                sum += board[i][j];
+                if (board[i][j] != 0) {
+                    ++count;
+                }
+            }
+        }
+        return (sum / count);
     }
 
     private boolean canMoveUp() {
@@ -192,9 +202,6 @@ public class AI {
 
     private boolean isTerminal(String who) {
         if (who.equals("max")) {
-            if (game.getMaxTileValue() >= 2048) {
-                return true;
-            }
             if (canMoveUp()) {
                 return false;
             }
@@ -359,13 +366,13 @@ public class AI {
     }
 
     private String getMoveTo(String move) {
-        if (canMoveUp() && move.equals("UP")) {
+        if (move.equals("UP") && canMoveUp()) {
             return "UP";
         }
-        if (canMoveDown() && move.equals("DOWN")) {
+        if (move.equals("DOWN") && canMoveDown()) {
             return "DOWN";
         }
-        if (canMoveLeft() && move.equals("LEFT")) {
+        if (move.equals("LEFT") && canMoveLeft()) {
             return "LEFT";
         }
         return "RIGHT";
@@ -379,8 +386,9 @@ public class AI {
         }
         --d;
         for (String mv : state.getAvailableMovesForMax()) {
-            state.move(mv);
-            List<Object> min = minimize(state, a, b, d);
+            AI newstate = new AI(null);
+            newstate.move(mv);
+            List<Object> min = minimize(newstate, a, b, d);
             int utility = (int) min.get(1);
             if (utility > maxUtility) {
                 maxMove = mv;
@@ -397,15 +405,16 @@ public class AI {
     }
 
     private List<Object> minimize(AI state, int a, int b, int d) {
-        int[] minMove = null;
+        int[] minMove = new int[3];
         int minUtility = Integer.MAX_VALUE;
         if (d == 0 || state.isTerminal("min")) {
             return Arrays.asList(null, state.utility());
         }
         --d;
         for (int[] cell : state.getAvailableMovesForMin()) {
-            state.board[cell[0]][cell[1]] = cell[2];
-            List<Object> max = maximize(state, a, b, d);
+            AI newstate = new AI(null);
+            newstate.board[cell[0]][cell[1]] = cell[2];
+            List<Object> max = maximize(newstate, a, b, d);
             int utility = (int) max.get(1);
             if (utility < minUtility) {
                 minMove = cell;
@@ -422,8 +431,9 @@ public class AI {
     }
 
     private String getBestMove(int depth) {
-        List<Object> max = maximize(new AI(null), Integer.MIN_VALUE, Integer.MAX_VALUE, depth);
+        AI state = new AI(null);
+        List<Object> max = maximize(state, Integer.MIN_VALUE, Integer.MAX_VALUE, depth);
         String move = (String) max.get(0);
-        return getMoveTo(move);
+        return state.getMoveTo(move);
     }
 }
