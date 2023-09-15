@@ -619,7 +619,7 @@
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\Ahmed\OneDrive\Documents\Projects\Game2048\img\shutdown-icon.png"/>
+                  <Image iconType="2" name="C:\Users\Ahmed\OneDrive\Documents\Projects\2048-AI\img\shutdown-icon.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Close!"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -634,7 +634,7 @@
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\Ahmed\OneDrive\Documents\Projects\Game2048\img\solve-icon.png"/>
+                  <Image iconType="2" name="C:\Users\Ahmed\OneDrive\Documents\Projects\2048-AI\img\solve-icon.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Solve with AI!"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
